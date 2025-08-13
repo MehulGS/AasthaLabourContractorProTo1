@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aastha Labour Contractor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SwiperJS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Fixed FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to bottom right, #0f0f0f, #1f1f1f);
+      color: #ffffff;
+    }
+
+    h1,
+    h2,
+    h3,
+    .orbitron {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .navbar-logo {
+      height: 50px;
+      width: auto;
+      padding: 5px 15px;
+    }
+
+
+    .glow-text {
+      text-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff, 0 0 15px #00f7ff;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #00f7ff;
+      color: black;
+      padding: 10px 14px;
+      border-radius: 9999px;
+      cursor: pointer;
+      display: none;
+      z-index: 100;
+    }
+
+    .scroll-top.show {
+      display: block;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff;
+      }
+
+      50% {
+        box-shadow: 0 0 15px #00f7ff, 0 0 30px #00f7ff;
+      }
+
+      100% {
+        box-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff;
+      }
+    }
+
+    .animate-glow {
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    /* Optional glowing text */
+    .glow-text {
+      text-shadow: 0 0 10px #ffe14d, 0 0 20px #ffe14d;
+    }
+
+    @keyframes fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fade-up 0.7s ease-out;
+    }
+
+    /* Mobile Menu Styles */
+    @media (max-width: 320px) {
+      .navbar-logo {
+        height: 40px;
+        width: auto;
+        padding: 3px 10px;
+      }
+
+      #mobileMenuBtn svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      #closeIcon svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    /* Enhanced Icon Animation Styles */
+    #mobileMenuBtn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #barsIcon,
+    #closeIcon {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, opacity;
+    }
+
+    #barsIcon.rotate-90 {
+      transform: rotate(90deg);
+    }
+
+    #closeIcon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Show close icon and hide bars icon when menu is open */
+    #mobileMenuBtn.menu-open #barsIcon {
+      opacity: 0;
+      transform: rotate(90deg) scale(0.8);
+      pointer-events: none;
+    }
+
+    #mobileMenuBtn.menu-open #closeIcon {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      pointer-events: auto;
+      z-index: 20;
+    }
+
+    /* Smooth icon swap animation */
+    #barsIcon.opacity-0 {
+      transform: rotate(90deg) scale(0.8);
+      pointer-events: none;
+    }
+
+    #closeIcon.opacity-100 {
+      transform: scale(1) rotate(0deg);
+      pointer-events: auto;
+      z-index: 30;
+    }
+
+    /* Pulse animation for mobile menu button */
+    @keyframes subtle-pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    #mobileMenuBtn:hover {
+      animation: subtle-pulse 2s ease-in-out infinite;
+    }
+
+    /* Glow effect for mobile menu button */
+    #mobileMenuBtn:hover {
+      text-shadow: 0 0 8px #00f7ff;
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+    }
+
+    /* Staggered entrance animation for mobile menu items */
+    .mobile-menu-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease-out;
+    }
+
+    .mobile-menu-item:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .mobile-menu-item:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .mobile-menu-item:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+    .mobile-menu-item:nth-child(4) {
+      transition-delay: 0.4s;
+    }
+
+    .mobile-menu-item:nth-child(5) {
+      transition-delay: 0.5s;
+    }
+
+    /* Show items when menu is open */
+    #mobileMenu.translate-x-0 .mobile-menu-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Ensure mobile menu is properly positioned */
+    #mobileMenu {
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    /* Smooth transitions for all interactive elements */
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-black via-gray-900 to-black">
+  <!-- Marquee -->
+  <marquee behavior="scroll" direction="left" class="bg-cyan-500 text-black py-2 text-sm font-semibold">
+    Skill Men Power Supply For Engineering Works | Office: B-4 Barcelona Complex, First Floor, Odhav Ring Road, Odhav,
+    Ahmedabad - 382415
+  </marquee>
+
+  <!-- Navbar -->
+  <nav
+    class="flex items-center justify-between px-4 sm:px-6 py-4 bg-gradient-to-r from-black via-gray-800 to-black shadow-xl sticky top-0 z-50">
+    <div class="flex items-center space-x-2">
+      <img src="https://cdn-icons-png.flaticon.com/512/2956/2956731.png" class="w-8 h-8 sm:w-10 sm:h-10 animate-bounce"
+        alt="Logo" />
+      <h1 class="text-lg sm:text-xl md:text-2xl font-bold orbitron glow-text">Aastha Labour Contractor</h1>
+    </div>
+
+    <!-- Desktop Menu -->
+    <div class="space-x-6 text-white hidden md:flex">
+      <a href="#" class="hover:text-cyan-400 transition-colors duration-300">Home</a>
+      <a href="#about" class="hover:text-cyan-400 transition-colors duration-300">About</a>
+      <a href="#services" class="hover:text-cyan-400 transition-colors duration-300">Services</a>
+      <a href="#clients" class="hover:text-cyan-400 transition-colors duration-300">Clients</a>
+      <a href="#contact" class="hover:text-cyan-400 transition-colors duration-300">Contact</a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobileMenuBtn"
+      class="md:hidden text-white hover:text-cyan-400 transition-all duration-300 focus:outline-none relative">
+      <!-- Bars Icon (Default) -->
+      <svg id="barsIcon" class="w-6 h-6 transition-all duration-300 transform" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+      <!-- Close Icon (Hidden by default) -->
+      <svg id="closeIcon" class="w-6 h-6 transition-all duration-300 absolute inset-0 opacity-0 scale-0 transform"
+        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobileMenu"
+    class="fixed inset-0 bg-black bg-opacity-90 z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <div class="flex flex-col h-full">
+      
+      <!-- Mobile Menu Header with Close Button -->
+      <div class="flex justify-end p-6">
+        <button id="mobileCloseBtn" class="text-white hover:text-cyan-400 transition-colors duration-300 focus:outline-none">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Items -->
+      <div class="flex flex-col items-center justify-center flex-1 space-y-8">
+        <a href="#"
+          class="text-2xl text-white hover:text-cyan-400 transition-colors duration-300 py-2 mobile-menu-item">Home</a>
+        <a href="#about"
+          class="text-2xl text-white hover:text-cyan-400 transition-colors duration-300 py-2 mobile-menu-item">About</a>
+        <a href="#services"
+          class="text-2xl text-white hover:text-cyan-400 transition-colors duration-300 py-2 mobile-menu-item">Services</a>
+        <a href="#clients"
+          class="text-2xl text-white hover:text-cyan-400 transition-colors duration-300 py-2 mobile-menu-item">Clients</a>
+        <a href="#contact"
+          class="text-2xl text-white hover:text-cyan-400 transition-colors duration-300 py-2 mobile-menu-item">Contact</a>
+      </div>
+
+      <!-- Contact Info at Bottom -->
+      <div class="text-center text-gray-300 pb-8">
+        <p class="text-sm">📞 +91 9898593015</p>
+        <p class="text-sm">✉️ nilesh_7129@yahoo.com</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero with generated image -->
+  <section class="h-screen flex items-center justify-center text-center px-4 bg-cover bg-center"
+    style="background-image: url('./banner.png');">
+    <div class="bg-black bg-opacity-70 p-10 rounded-xl">
+      <h2 class="text-4xl md:text-6xl font-bold text-white glow-text orbitron mb-4">We Build Your Workforce</h2>
+      <p class="text-lg text-gray-300 mb-6 max-w-xl mx-auto">Reliable, skilled, and efficient labour supply for all your
+        construction and industrial needs.</p>
+      <a href="#contact"
+        class="px-6 py-3 bg-gradient-to-r from-cyan-400 to-pink-500 text-black font-semibold rounded-full hover:scale-105 transition">Get
+        in Touch</a>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section id="about" class="py-20 px-6 md:px-20 bg-gray-900 text-white">
+    <h3 class="text-3xl font-bold text-center orbitron glow-text mb-12">About Us</h3>
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
+
+      <!-- Left Image -->
+      <div class="lg:w-1/2 lg:h-1/2 w-full overflow-hidden rounded-lg mb-10 lg:mb-0 relative group p-4">
+        <!-- Image Container -->
+        <div
+          class="w-full h-full flex items-center justify-center overflow-hidden rounded-lg transition-transform duration-300 p-4">
+          <img src="./dummy demo.png" alt="Nilesh Chauhan - Owner"
+            class="rounded-full shadow-2xl  object-contain border-4 border-white bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 " />
+        </div>
+
+        <!-- Owner Name -->
+        <div class="text-center mt-4">
+          <h3 class="text-xl font-semibold text-white tracking-wide">Nilesh Chauhan</h3>
+          <p class="text-sm text-gray-200 italic">Founder & Owner</p>
+        </div>
+      </div>
+
+
+      <!-- Right Text -->
+      <div class="lg:w-1/2 w-full text-left">
+        <h4 class="text-2xl font-semibold mb-4">Who We Are</h4>
+        <p class="text-gray-300 mb-4 leading-relaxed">
+          Aastha Labour Contractor has been a trusted name in manpower services for over <strong>15 years</strong>,
+          providing skilled, semi-skilled, and unskilled labour to leading industries across India. We specialize in
+          deploying verified manpower to sectors such as manufacturing, pharmaceuticals, logistics, and construction.
+        </p>
+        <p class="text-gray-300 mb-4 leading-relaxed">
+          Our commitment lies in <strong>quality, reliability, and timely delivery</strong>. Whether it’s a short-term
+          requirement or long-term project-based deployment, we ensure that the right people are placed at the right
+          job. Our transparent processes and dedicated team have helped us successfully complete over <strong>500+
+            projects</strong> across various states.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          At Aastha Labour Contractor, our goal is to build long-lasting partnerships with our clients. We continuously
+          evolve to match workforce trends, ensure legal compliance, and uphold safety standards—making us the manpower
+          partner of choice for many.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-16 px-6 lg:px-20  text-white">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl lg:text-5xl font-bold glow-text orbitron mb-4">Our Powerful Group of Firms</h2>
+        <p class="text-lg text-gray-300">Working together to deliver excellence across industries</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Aastha Labour Contractor -->
+        <div
+          class="bg-gradient-to-tr from-blue-700 to-blue-500 p-6 rounded-2xl shadow-2xl border border-blue-300 transform hover:scale-105 transition duration-300 group relative overflow-hidden">
+          <h3 class="text-2xl font-bold mb-2">Aastha Labour Contractor</h3>
+          <p class="text-gray-100 mb-4">Specialized in providing skilled & unskilled manpower for all industries.</p>
+          <span
+            class="absolute top-0 right-0 bg-white text-blue-600 font-bold px-3 py-1 rounded-bl-xl text-xs">Flagship</span>
+          <div
+            class="absolute bottom-0 left-0 w-full h-1 bg-blue-300 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300">
+          </div>
+        </div>
+
+        <!-- Mamta Enterprise -->
+        <div
+          class="bg-gradient-to-tr from-purple-700 to-purple-500 p-6 rounded-2xl shadow-2xl border border-purple-300 transform hover:scale-105 transition duration-300 group relative overflow-hidden">
+          <h3 class="text-2xl font-bold mb-2">Mamta Enterprise</h3>
+          <p class="text-gray-100 mb-4">Experts in contract-based staffing and workforce management solutions.</p>
+          <span
+            class="absolute top-0 right-0 bg-white text-purple-600 font-bold px-3 py-1 rounded-bl-xl text-xs">Trusted</span>
+          <div
+            class="absolute bottom-0 left-0 w-full h-1 bg-purple-300 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300">
+          </div>
+        </div>
+
+        <!-- Shree Ram Enterprise -->
+        <div
+          class="bg-gradient-to-tr from-green-700 to-green-500 p-6 rounded-2xl shadow-2xl border border-green-300 transform hover:scale-105 transition duration-300 group relative overflow-hidden">
+          <h3 class="text-2xl font-bold mb-2">Shree Ram Enterprise</h3>
+          <p class="text-gray-100 mb-4">Delivering high-quality technical and general labor for all sectors.</p>
+          <span
+            class="absolute top-0 right-0 bg-white text-green-600 font-bold px-3 py-1 rounded-bl-xl text-xs">Growing</span>
+          <div
+            class="absolute bottom-0 left-0 w-full h-1 bg-green-300 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision & Mission Section -->
+    <div class="flex flex-wrap justify-center gap-8 mt-20 px-4 lg:px-20">
+      <!-- Vision Card -->
+      <div
+        class="relative group bg-gradient-to-br from-gray-900 to-black p-6 rounded-2xl shadow-2xl max-w-xs w-full text-center border border-blue-600 transition-transform transform hover:scale-105 hover:shadow-blue-500/50 duration-300 overflow-hidden">
+        <!-- Icon -->
+        <div class="text-blue-400 mb-4 text-4xl">
+          <i class="fas fa-eye"></i>
+        </div>
+        <!-- Title -->
+        <h4 class="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition duration-300">
+          Vision
+        </h4>
+        <!-- Description -->
+        <p class="text-gray-300 text-sm leading-relaxed group-hover:text-white transition duration-300">
+          To be the most preferred manpower partner in India by 2030.
+        </p>
+        <!-- Glowing Border Animation -->
+        <div class="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-500 animate-glow">
+        </div>
+      </div>
+
+      <!-- Mission Card -->
+      <div
+        class="relative group bg-gradient-to-br from-gray-900 to-black p-6 rounded-2xl shadow-2xl max-w-xs w-full text-center border border-green-600 transition-transform transform hover:scale-105 hover:shadow-green-500/50 duration-300 overflow-hidden">
+        <!-- Icon -->
+        <div class="text-green-400 mb-4 text-4xl">
+          <i class="fas fa-bullseye"></i>
+        </div>
+        <!-- Title -->
+        <h4 class="text-2xl font-bold text-white mb-2 group-hover:text-green-400 transition duration-300">
+          Mission
+        </h4>
+        <!-- Description -->
+        <p class="text-gray-300 text-sm leading-relaxed group-hover:text-white transition duration-300">
+          Deliver skilled, verified manpower with speed, scale, and service excellence.
+        </p>
+        <!-- Glowing Border Animation -->
+        <div class="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-green-500 animate-glow">
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- Services -->
+  <section id="services" class="py-20 px-6 md:px-20 bg-gradient-to-r from-gray-900 to-black text-white">
+    <h3 class="text-3xl font-bold text-center orbitron glow-text mb-12">Our Services</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
+      <div class="text-center fade-up">
+        <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" class="w-16 h-16 mx-auto mb-4" />
+        <h4 class="text-xl font-semibold mb-2">Engineering Labour</h4>
+        <p class="text-gray-300">Certified engineering labour for infrastructure & plant maintenance.</p>
+      </div>
+      <div class="text-center fade-up">
+        <img src="https://cdn-icons-png.flaticon.com/512/3202/3202926.png" class="w-16 h-16 mx-auto mb-4" />
+        <h4 class="text-xl font-semibold mb-2">Foundry Support</h4>
+        <p class="text-gray-300">Experienced foundry workers for iron, steel & aluminum casting units.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <section id="clients" class="py-20 px-6 md:px-20 bg-gray-900 text-white">
+    <h3 class="text-3xl font-bold text-center orbitron glow-text mb-12">Our Esteemed Clients</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-12">
+      <div class="bg-black p-6 rounded-lg">Metso India Pvt. Ltd.</div>
+      <div class="bg-black p-6 rounded-lg">Param Cylinder</div>
+      <div class="bg-black p-6 rounded-lg">Crisent Foundry Pvt. Ltd.</div>
+    </div>
+  </section>
+
+  <section class="relative z-10">
+    <div class="text-white py-16 px-6 lg:px-20 flex flex-col lg:flex-row items-center justify-between gap-12">
+
+      <!-- Static Left Section -->
+      <div class="w-full lg:w-1/2 text-center lg:text-left relative">
+        <h2 class="text-4xl lg:text-5xl font-bold leading-tight orbitron glow-text mb-4">
+          LOOK WHAT OUR<br />
+          CUSTOMERS SAY
+        </h2>
+
+        <!-- Divider -->
+        <div
+          class="w-24 h-1 mx-auto lg:mx-0 bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-500 rounded-full animate-pulse mt-4">
+        </div>
+      </div>
+
+      <!-- Swiper Slider Section -->
+      <div class="w-full lg:w-1/2 relative">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <!-- Testimonial Slide 1 -->
+            <div class="swiper-slide">
+              <div
+                class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl p-6 transition duration-300 hover:border-yellow-400 hover:scale-105">
+                <div class="text-4xl text-yellow-400 mb-4">"</div>
+                <p class="text-lg text-white mb-4">
+                  Aastha Labour Contractor's commitment to excellence is evident in every project they undertake.
+                  Their team's expertise and dedication to detail ensure that every facility is built to
+                  the highest standards.
+                </p>
+                <div class="flex items-center mt-4">
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                    class="w-12 h-12 rounded-full mr-4 border-2 border-white" alt="Client" />
+                  <div>
+                    <p class="font-semibold text-white">Michael Rodriguez</p>
+                    <div class="text-yellow-400 text-sm">★★★★★</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial Slide 2 -->
+            <div class="swiper-slide">
+              <div
+                class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl p-6 transition duration-300 hover:border-yellow-400 hover:scale-105">
+                <div class="text-4xl text-yellow-400 mb-4">"</div>
+                <p class="text-lg text-white mb-4">
+                  Excellent response and manpower quality! Great communication throughout.
+                </p>
+                <div class="flex items-center mt-4">
+                  <img src="https://randomuser.me/api/portraits/women/45.jpg"
+                    class="w-12 h-12 rounded-full mr-4 border-2 border-white" alt="Client" />
+                  <div>
+                    <p class="font-semibold text-white">Anita Sharma</p>
+                    <div class="text-yellow-400 text-sm">★★★★☆</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial Slide 3 -->
+            <div class="swiper-slide">
+              <div
+                class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl p-6 transition duration-300 hover:border-yellow-400 hover:scale-105">
+                <div class="text-4xl text-yellow-400 mb-4">"</div>
+                <p class="text-lg text-white mb-4">
+                  Outstanding service and professional approach. Highly recommended for any manpower needs.
+                </p>
+                <div class="flex items-center mt-4">
+                  <img src="https://randomuser.me/api/portraits/men/67.jpg"
+                    class="w-12 h-12 rounded-full mr-4 border-2 border-white" alt="Client" />
+                  <div>
+                    <p class="font-semibold text-white">Rajesh Patel</p>
+                    <div class="text-yellow-400 text-sm">★★★★★</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial Slide 4 -->
+            <div class="swiper-slide">
+              <div
+                class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl p-6 transition duration-300 hover:border-yellow-400 hover:scale-105">
+                <div class="text-4xl text-yellow-400 mb-4">"</div>
+                <p class="text-lg text-white mb-4">
+                  Reliable and efficient labour supply. They understand our requirements perfectly.
+                </p>
+                <div class="flex items-center mt-4">
+                  <img src="https://randomuser.me/api/portraits/women/23.jpg"
+                    class="w-12 h-12 rounded-full mr-4 border-2 border-white" alt="Client" />
+                  <div>
+                    <p class="font-semibold text-white">Priya Singh</p>
+                    <div class="text-yellow-400 text-sm">★★★★★</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SwiperJS Init -->
+    <script>
+      new Swiper('.mySwiper', {
+        loop: true,
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false,
+        },
+        slidesPerView: 1,
+        spaceBetween: 20,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      });
+    </script>
+  </section>
+
+  <section id="faq" class="py-20 px-6 text-gray-800">
+    <div class="max-w-7xl mx-auto">
+      <h3 class="text-4xl font-bold orbitron glow-text text-white text-center mb-12 relative inline-block">
+        FAQ's
+        <span
+          class="absolute left-1/2 transform -translate-x-1/2 bottom-[-10px] w-20 h-1 bg-gradient-to-r from-blue-400 via-pink-400 to-purple-500 rounded-full animate-pulse"></span>
+      </h3>
+
+      <div class="space-y-4">
+        <!-- Question 1 -->
+        <details
+          class="group border border-blue-200 rounded-xl p-4 shadow-md hover:shadow-blue-200 transition-all duration-300">
+          <summary class="flex items-center justify-between cursor-pointer text-lg font-semibold text-blue-800">
+            What type of manpower do you provide?
+            <span class="ml-4 transition-transform group-open:rotate-45 text-blue-600">
+              <svg class="w-5 h-5 transform group-open:rotate-45 transition-transform duration-300" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </span>
+          </summary>
+          <p class="mt-3 text-white leading-relaxed">
+            We provide both skilled and unskilled labour based on client needs.
+          </p>
+        </details>
+
+        <!-- Question 2 -->
+        <details
+          class="group border border-blue-200 rounded-xl p-4 shadow-md hover:shadow-blue-200 transition-all duration-300">
+          <summary class="flex items-center justify-between cursor-pointer text-lg font-semibold text-blue-800">
+            Are your workers trained?
+            <span class="ml-4 transition-transform group-open:rotate-45 text-blue-600">
+              <svg class="w-5 h-5 transform group-open:rotate-45 transition-transform duration-300" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </span>
+          </summary>
+          <p class="mt-3 text-white leading-relaxed">
+            Yes, we ensure our workforce is trained for industrial safety and tasks.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Contact, Google Map, FAQs, Scroll Button etc. -->
+  <section id="contact" class="py-16 px-6">
+    <h2 class="text-center text-4xl font-bold orbitron glow-text mb-12 fade-up">
+      📬 Get in Touch
+    </h2>
+    <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Contact Form -->
+      <form onsubmit="sendMessage(event)"
+        class="border-2 border-white p-8 rounded-2xl shadow-2xl space-y-6 max-w-xl mx-auto bg-black/80 backdrop-blur-sm animate-fade-up">
+        <h2 class="text-center text-4xl font-bold orbitron text-white mb-8 tracking-wide glow-text">
+          📬 Tell Us How Can We Help You?
+        </h2>
+
+        <!-- Name -->
+        <div class="relative">
+          <input type="text" id="name" placeholder="Your Name"
+            class="w-full p-4 pl-12 rounded-lg border border-gray-500 bg-white/10 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            required />
+          <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-lg">👤</span>
+        </div>
+
+        <!-- Email -->
+        <div class="relative">
+          <input type="email" id="email" placeholder="Your Email"
+            class="w-full p-4 pl-12 rounded-lg border border-gray-500 bg-white/10 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            required />
+          <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-lg">📧</span>
+        </div>
+
+        <!-- Message -->
+        <div class="relative">
+          <textarea id="message" placeholder="Your Message" rows="4"
+            class="w-full p-4 pl-12 rounded-lg border border-gray-500 bg-white/10 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
+            required></textarea>
+          <span class="absolute left-4 top-4 text-white text-lg">💬</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+          class="w-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:brightness-110 text-white py-3 rounded-md text-lg font-bold shadow-md transition-all">
+          📩 Send via WhatsApp & Email
+        </button>
+      </form>
+
+
+      <!-- Address & Map -->
+      <div class="space-y-6 text-center fade-up">
+        <div class=" p-6 rounded-xl shadow-xl space-y-3">
+          <div class="flex justify-center mb-4">
+            <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" class="w-12 mx-auto lg:mx-0 mb-2" />
+          </div>
+          <p class="text-lg font-medium">📍 <strong>Address:</strong><br />
+            B-4 Barcelona Complex, 1st Floor,<br />
+            Odhav Ring Road, Odhav, Ahmedabad,<br />
+            Gujarat, India – 382415
+          </p>
+          <p class="text-lg font-medium">📞 +91 9898593015</p>
+          <p class="text-lg font-medium">✉️ <a href="mailto:nilesh_7129@yahoo.com"
+              class="underline">nilesh_7129@yahoo.com</a></p>
+        </div>
+        <div class="overflow-hidden rounded-xl shadow-xl">
+          <iframe class="w-full h-64"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.953336518311!2d72.67230909999999!3d23.0254855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e87a85bffe60d%3A0x67253102ecb626d0!2sBarcelona%20Arcade!5e0!3m2!1sen!2sin!4v1753011943057!5m2!1sen!2sin"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Will continue in next update if needed -->
+
+  <!-- Scroll to Top Button -->
+  <div id="scrollTopBtn"
+    class="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-white text-2xl font-bold flex items-center justify-center cursor-pointer shadow-lg transition-all duration-300 opacity-0 scale-0"
+    title="Scroll to top">
+    <svg class="w-full h-full" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="45" stroke="white" stroke-width="6" fill="none" opacity="0.2" />
+      <circle id="progressCircle" cx="50" cy="50" r="45" stroke="yellow" stroke-width="6" fill="none"
+        stroke-dasharray="283" stroke-dashoffset="283" />
+    </svg>
+    <span class="absolute z-10">↑</span>
+  </div>
+
+  <footer class="text-center py-6 bg-[#0f172a] text-gray-400 text-sm">
+    &copy; 2025 Aastha Labour Contractor. All Rights Reserved.
+  </footer>
+
+
+  <script>
+    // Mobile Menu Functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const closeIcon = document.getElementById('closeIcon');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const barsIcon = document.getElementById('barsIcon');
+    const body = document.body;
+
+    // Function to close mobile menu
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('translate-x-0');
+      mobileMenu.classList.add('translate-x-full');
+      body.style.overflow = '';
+
+      // Reset icon transformation
+      barsIcon.classList.remove('opacity-0', 'scale-0', 'rotate-90');
+      closeIcon.classList.remove('opacity-100', 'scale-100');
+      closeIcon.classList.add('opacity-0', 'scale-0');
+      mobileMenuBtn.classList.remove('menu-open');
+    }
+
+    // Function to open mobile menu
+    function openMobileMenu() {
+      mobileMenu.classList.remove('translate-x-full');
+      mobileMenu.classList.add('translate-x-0');
+      body.style.overflow = 'hidden';
+
+      // Animate icon transformation
+      barsIcon.classList.add('opacity-0', 'scale-0', 'rotate-90');
+      closeIcon.classList.remove('opacity-0', 'scale-0');
+      closeIcon.classList.add('opacity-100', 'scale-100');
+      mobileMenuBtn.classList.add('menu-open');
+    }
+
+    // Combined click handler for the button
+    mobileMenuBtn.addEventListener('click', (e) => {
+      // Check if menu is currently open
+      if (mobileMenu.classList.contains('translate-x-0')) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+
+    // Close menu when clicking on the close button
+    mobileCloseBtn.addEventListener('click', closeMobileMenu);
+
+    // Close menu when clicking on menu items
+    const mobileMenuItems = mobileMenu.querySelectorAll('a');
+    mobileMenuItems.forEach(item => {
+      item.addEventListener('click', closeMobileMenu);
+    });
+
+    // Close menu when clicking outside
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        closeMobileMenu();
+      }
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMobileMenu();
+      }
+    });
+
+    const fadeElems = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    });
+    fadeElems.forEach(el => observer.observe(el));
+
+    function sendMessage(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const fullMessage = `Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
+      const whatsappURL = `https://wa.me/919898593015?text=${fullMessage}`;
+      const mailtoURL = `mailto:nilesh_7129@yahoo.com?subject=Contact From Website&body=${fullMessage}`;
+
+      // Open both
+      window.open(whatsappURL, '_blank');
+      window.open(mailtoURL, '_blank');
+    }
+
+    // Fixed Scroll Progress Circle
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    const progressCircle = document.getElementById("progressCircle");
+    
+    // Wait for DOM to be fully loaded before accessing SVG properties
+    document.addEventListener('DOMContentLoaded', function() {
+      if (progressCircle) {
+        const totalLength = progressCircle.getTotalLength();
+        
+        window.addEventListener("scroll", () => {
+          // Show/hide scroll button
+          if (window.scrollY > 100) {
+            scrollBtn.classList.add("opacity-100", "scale-100");
+            scrollBtn.classList.remove("opacity-0", "scale-0");
+          } else {
+            scrollBtn.classList.remove("opacity-100", "scale-100");
+            scrollBtn.classList.add("opacity-0", "scale-0");
+          }
+
+          // Scroll progress ring logic
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = scrollTop / docHeight;
+          const drawLength = totalLength * (1 - scrollPercent);
+          progressCircle.style.strokeDashoffset = drawLength;
+        });
+      }
+    });
+
+    scrollBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+
+</html>
